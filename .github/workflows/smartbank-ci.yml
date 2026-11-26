@@ -47,15 +47,28 @@ jobs:
       - name: Build and Execute Tests
         run: mvn --batch-mode --no-transfer-progress clean verify
 
-      # Step 5: Upload JUnit test reports
-      - name: Upload Test Reports
-        if: always()
-        uses: actions/upload-artifact@v7
+    #   # Step 5: Upload JUnit test reports
+    #   - name: Upload Test Reports
+    #     if: always()
+    #     uses: actions/upload-artifact@v7
+    #     with:
+    #       name: smartbank-test-reports
+    #       path: target/surefire-reports/
+    #       if-no-files-found: warn
+    #       retention-days: 7
+
+      # Step 5: Publish professional JUnit test report
+      - name: Publish JUnit Test Report
+        uses: dorny/test-reporter@v3
+        if: ${{ !cancelled() }}
         with:
-          name: smartbank-test-reports
-          path: target/surefire-reports/
-          if-no-files-found: warn
-          retention-days: 7
+          name: SmartBank JUnit Test Results
+          path: target/surefire-reports/TEST-*.xml
+          reporter: java-junit
+          list-tests: all
+          list-suites: all
+          fail-on-empty: true
+
 
       # Step 6: Upload application JAR
       - name: Upload SmartBank JAR
