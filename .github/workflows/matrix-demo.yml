@@ -1,0 +1,35 @@
+
+name: SmartBank Matrix Demo
+
+on:
+  push:
+    branches:
+      - main
+#   workflow_dispatch:
+
+jobs:
+  java-test:
+    name: Test with Java ${{ matrix.java-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [17, 21]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java-version }}
+
+      - name: Display Java Version
+        run: java -version
+
+      - name: Display Matrix Information
+        run: |
+          echo "SmartBank Compatibility Test"
+          echo "Java Version: ${{ matrix.java-version }}"
