@@ -1,0 +1,28 @@
+
+name: SmartBank Expressions Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Repository
+        run: 'echo "Repository: ${{ github.repository }}"'
+
+      - name: Display Branch
+        run: 'echo "Branch: ${{ github.ref_name }}"'
+
+      - name: Display Runner OS
+        run: 'echo "Runner OS: ${{ runner.os }}"'
+        
+
+      - name: Display Application
+        env:
+          APP_NAME: SmartBank
+          APP_ENV: Training
+        run: |
+          echo "Application: $APP_NAME"
+          echo "Environment: $APP_ENV"
