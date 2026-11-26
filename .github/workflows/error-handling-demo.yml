@@ -1,0 +1,40 @@
+
+name: SmartBank Error Handling Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Start SmartBank Testing
+        run: echo "Testing started"
+
+      - name: Simulate Optional Validation Failure
+        continue-on-error: true
+        run: |
+          echo "Optional validation running"
+          exit 1
+
+      - name: Continue Testing
+        run: echo "Testing continues"
+
+      - name: Simulate Main Test Failure
+        run: |
+          echo "Executing SmartBank tests"
+          exit 1
+
+      - name: Success Message
+        if: success()
+        run: echo "All tests passed"
+
+      - name: Failure Message
+        if: failure()
+        run: echo "SmartBank tests failed"
+
+      - name: Final Cleanup
+        if: always()
+        run: echo "Final cleanup executed"
