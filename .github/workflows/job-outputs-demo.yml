@@ -1,0 +1,44 @@
+
+name: SmartBank Job Outputs Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      app_version: ${{ steps.version.outputs.app_version }}
+
+    steps:
+      - name: Generate Application Version
+        id: version
+        run: echo "app_version=1.0.0" >> "$GITHUB_OUTPUT"
+
+      - name: Display Build Information
+        run: echo "SmartBank application build completed"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Display Version
+        run: |
+          echo "Testing SmartBank version ${{ needs.build.outputs.app_version }}"
+
+      - name: Execute Test Simulation
+        run: echo "All SmartBank tests passed"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, test]
+
+    steps:
+      - name: Display Deployment Version
+        run: |
+          echo "Deploying SmartBank version ${{ needs.build.outputs.app_version }}"
+
+      - name: Deployment Message
+        run: echo "SmartBank deployment completed"
