@@ -16,7 +16,7 @@ jobs:
         run: echo "SmartBank build started"
 
       - name: Step 2 - Check Branch
-        if: github.ref == 'refs/heads/main'
+        if: github.ref != 'refs/heads/main'
         run: echo "Running on main branch"
 
       - name: Step 3 - Successful Build Message
