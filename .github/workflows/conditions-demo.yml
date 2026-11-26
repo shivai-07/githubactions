@@ -1,0 +1,32 @@
+
+name: SmartBank Conditions Demo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Step 1 - Start Build
+        run: echo "SmartBank build started"
+
+      - name: Step 2 - Check Branch
+        if: github.ref == 'refs/heads/main'
+        run: echo "Running on main branch"
+
+      - name: Step 3 - Successful Build Message
+        if: success()
+        run: echo "Build steps completed successfully"
+
+      - name: Step 4 - Failure Message
+        if: failure()
+        run: echo "Build failed. Please check the logs."
+
+      - name: Step 5 - Always Execute
+        if: always()
+        run: echo "This step always executes"
